@@ -1,5 +1,7 @@
 const tbody = document.querySelector('tbody')
 
+let saveTasks = []
+
 function criarElemento(tag, innerText = '', innerHTML = '') {
     const elemento = document.createElement(tag);
 
@@ -108,3 +110,4 @@ addBtn.addEventListener('click', function() {
     }
     
 })
+
