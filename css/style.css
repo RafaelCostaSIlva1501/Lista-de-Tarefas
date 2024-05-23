@@ -175,19 +175,23 @@ tr:nth-child(even) {
     background-color: var(--corBaseEscura2);
 }
 
-.action-btn {
+table button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--corBaseEscura);
-    border: 1px solid var(--corBaseClara);
+    background-color: #00000033;
+    border: none;
     border-radius: 5px;
     padding: 5px;
     margin: 2px;
     cursor: pointer;
+} 
+
+table button:hover {
+    background-color: #00000069;
 }
 
-.action-btn span {
+table button span {
     color: var(--cor02);
 }
 

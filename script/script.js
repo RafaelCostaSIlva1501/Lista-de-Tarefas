@@ -7,12 +7,8 @@ const term = document.getElementById("term"); // Input que recebe a data de entr
 
 const addTask = document.getElementById("addTaskBtn"); // Botão para adicionar a terefa na tabela
 
-const confirmDelete = document.getElementById("confirmDelete"); // Confirmação para apagar tarefa
+const modalDeleteTask = document.getElementById("modalDeleteTask"); // Confirmação para apagar tarefa
 const cancelDelete = document.getElementById("cancelDelete");
-
-cancelDelete.addEventListener("click", () => {
-    confirmDelete.style.display = "none"
-})
 
 // Adiciona a função de abrir no botão de abrir o formulário
 openFormBtn.addEventListener("click", () => {
@@ -61,7 +57,8 @@ addTask.addEventListener("click", () => {
     const taskJSON = JSON.stringify(saveTasks);
     localStorage.setItem("task", taskJSON);
 
-    document.getElementById("title").value = "";
+    title.value = "";
+    term.value = "";
 
     createElement(); // Chamar a função para atualizar a tabela após adicionar a nova tarefa
 
@@ -76,42 +73,60 @@ const createElement = () => {
     tbody.innerHTML = ""; // Limpar o conteúdo existente do tbody
 
     saveTasks.forEach((info) => {
+        //Adiciona uma nova linha a tabela
         const tr = document.createElement("tr");
+
+        //Célula com o título da tarefa
         const tdTitle = document.createElement("td");
         tdTitle.textContent = info.title;
+        tr.appendChild(tdTitle);
 
+        //Célula com a data da tarefa
         const tdData = document.createElement("td");
         tdData.textContent = info.data;
+        tr.appendChild(tdData);
 
+        //Célula com botão de deletar
         const tdButtons = document.createElement("td");
         const deleteButton = document.createElement("button");
-        deleteButton.classList.add("action-btn");
-
         const span = document.createElement("span");
+        deleteButton.classList.add("action-btn");
         span.classList.add("material-symbols-outlined");
         span.textContent = "delete";
-
         deleteButton.appendChild(span);
+
         deleteButton.addEventListener("click", () => {
-            confirmDelete.style.display = "flex";
+            modalDeleteTask.style.display = "flex";
 
-            document
-                .getElementById("deleteTask")
-                .addEventListener("click", () => {
-                    const index = saveTasks.indexOf(info);
-                    if (index > -1) {
-                        saveTasks.splice(index, 1);
-                        localStorage.setItem("task", JSON.stringify(saveTasks));
-                        createElement(); // Atualizar a tabela
+            const deleteConfirmButton = document.getElementById(
+                "deleteConfirmButton"
+            );
 
-                        confirmDelete.style.display = "none";
-                    }
-                });
+            const buttonDelete = document.createElement("button");
+            buttonDelete.innerText = "Sim, apagar!";
+
+            buttonDelete.addEventListener("click", () => {
+                const index = saveTasks.indexOf(info);
+                if (index > -1) {
+                    saveTasks.splice(index, 1);
+                    localStorage.setItem("task", JSON.stringify(saveTasks));
+                    createElement(); // Atualizar a tabela
+
+                    modalDeleteTask.style.display = "none";
+                    buttonDelete.remove();
+                }
+            });
+
+            cancelDelete.addEventListener("click", () => {
+                modalDeleteTask.style.display = "none";
+                buttonDelete.remove();
+            });
+
+            deleteConfirmButton.appendChild(buttonDelete);
         });
 
         tdButtons.appendChild(deleteButton);
-        tr.appendChild(tdTitle);
-        tr.appendChild(tdData);
+
         tr.appendChild(tdButtons);
         tbody.appendChild(tr); // Adicionar a nova linha à tabela
     });
