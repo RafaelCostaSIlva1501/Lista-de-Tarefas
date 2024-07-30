@@ -17,220 +17,63 @@
     --corTexto: #d4d4d4;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: var(--corTexto);
-    font-family: "Raleway", sans-serif;
-}
-
 body {
+    height: 100vh;
+    max-width: 100vh;
     background-color: var(--corBaseEscura);
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    flex: 1;
+    
+    padding: 10px;
+
     border: 2px solid var(--corBaseClara);
     border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    width: 90%;
+    
     box-shadow: 0px 0px 8px black;
 }
 
-.create-task-btn {
+.container-weekday-button {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
 
-    width: 100%;
+    padding: 10px;
 
-    padding: 5px 10px;
+    border: 2px solid var(--corBaseClara);
+    border-radius: 8px;
+    
+    box-shadow: 0px 0px 8px black;
+}
+
+.container-weekday-button button {
+    flex: 1;
+
+    margin: 0px 1px;
+    padding: 2px 5px;
 
     background: none;
     border: 1px solid var(--corBaseClara);
-    border-radius: 5px;
+    border-bottom: none;
+    border-top: none;
+
+    color: var(--corTexto);
+    font-size: medium;
 
     cursor: pointer;
 }
 
-.create-task-btn:hover {
+.container-weekday-button button:focus {
     background-color: var(--corBaseClara);
-    transition: background-color 0.3s, border 0s;
 }
 
-.blur {
+.container-weekday {
     display: none;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
-    width: 100vw;
-    height: 100vh;
-
-    backdrop-filter: blur(5px);
-}
-
-.form-task {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-
-    width: 80%;
-
-    padding: 10px;
-
-    background-color: var(--corBaseEscura);
     border: 2px solid var(--corBaseClara);
-    border-radius: 5px;
-
-    z-index: 1;
-}
-
-.form-task > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    align-items: center;
-
-    width: 100%;
-
-    cursor: pointer;
-}
-
-.form-task input {
-    width: 100%;
-
-    padding: 10px;
-
-    background-color: var(--corBaseEscura);
-    border: 1px solid var(--corBaseClara);
-    border-radius: 5px;
-
-    color: var(--corTexto);
-    font-size: 1rem;
-    font-weight: 600;
-
-    outline: none;
-}
-
-.form-task input::placeholder {
-    color: var(--corTexto);
-}
-
-.form-task hr {
-    width: 100%;
-
-    margin: 10px 0px;
-
-    border: 1px solid transparent;
-    
-}
-
-.form-task button {
-    width: 100%;
-    
-    padding: 10px;
-
-    background-color: var(--corBaseEscura);
-    border: 1px solid var(--corBaseClara);
-    border-radius: 5px;
-
-    color: var(--corTexto);
-    font-size: 1rem;
-    font-weight: 500;
-
-    cursor: pointer;
-}
-
-.form-task button:hover {
-    background-color: var(--corBaseClara);
-    transition: background-color 0.3s ease-in-out;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid var(--corBaseClara);
-    padding: 10px;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-td {
-    font-weight: 600;
-}
-
-tr:nth-child(even) {
-    background-color: var(--corBaseEscura2);
-}
-
-table button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #00000033;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 2px;
-    cursor: pointer;
-} 
-
-table button:hover {
-    background-color: #00000069;
-}
-
-table button span {
-    color: var(--cor02);
-}
-
-.confirm-delete {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-
-    padding: 30px ;
-
-    background-color: var(--corBaseEscura);
-    border: 2px solid var(--corBaseClara);
-    border-radius: 5px;
-
-    z-index: 1;
-}
-
-.confirm-delete span { 
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.confirm-delete button {
-    margin: 0px 5px;
-    padding: 5px;
-
-    background-color: var(--corBaseEscura);
-    border: 2px solid var(--corBaseClara);
-    border-radius: 5px;
-
-    color: var(--corTexto);
-    font-size: 1rem;
-    font-weight: 500;
-
-    cursor: pointer;
-}
-
-.confirm-delete button:hover {
-    background-color: var(--corBaseClara);
-    transition: background-color 0.1s ease-in-out;
+    border-radius: 8px;
 }
