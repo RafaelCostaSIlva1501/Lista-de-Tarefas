@@ -1,40 +1,46 @@
 @charset "UTF-8";
 
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 :root {
-    --cor01: #f2d541;
-    --cor01A: #f2d541c0;
-    --cor02: #d92353;
-    --cor02A: #d92353a1;
-    --cor03: #60b6bf;
-    --cor03A: #60b6bf9d;
-    --cor04: #1d803a;
-    --cor04A: #1d803b6c;
     --corBaseEscura: #212529;
-    --corBaseEscura2: #31373d;
-    --corBaseClara: #788a9c;
+    --corBaseClara: #838e9950;
     --corTexto: #d4d4d4;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: "Roboto";
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 5px;
+
     height: 100vh;
-    max-width: 100vh;
+    max-height: 100vh;
+
     background-color: var(--corBaseEscura);
 }
 
-main {
+.container {
     display: flex;
     flex-direction: column;
     gap: 10px;
 
     flex: 1;
-    
+
     padding: 10px;
 
     border: 2px solid var(--corBaseClara);
     border-radius: 8px;
-    
+
     box-shadow: 0px 0px 8px black;
 }
 
@@ -45,9 +51,9 @@ main {
 
     padding: 10px;
 
-    border: 2px solid var(--corBaseClara);
+    background-color: var(--corBaseClara);
     border-radius: 8px;
-    
+
     box-shadow: 0px 0px 8px black;
 }
 
@@ -58,9 +64,8 @@ main {
     padding: 2px 5px;
 
     background: none;
-    border: 1px solid var(--corBaseClara);
-    border-bottom: none;
-    border-top: none;
+    border: none;
+    border-radius: 2px;
 
     color: var(--corTexto);
     font-size: medium;
@@ -72,8 +77,209 @@ main {
     background-color: var(--corBaseClara);
 }
 
+/* Estilos para a seção container */
 .container-weekday {
     display: none;
-    border: 2px solid var(--corBaseClara);
+    flex-direction: column;
+    gap: 10px;
+
+    height: 100%;
+    width: 100%;
+
+    margin: 0 auto;
+    padding: 20px;
+
+    background-color: var(--corBaseClara);
     border-radius: 8px;
+    box-shadow: 0px 0px 8px black;
+}
+
+/* Estilos para o botão adicionar tarefa */
+.btn-create-task {
+    display: flex;
+    align-items: center;
+
+    padding: 10px 20px;
+
+    background-color: var(--corTexto);
+    border: none;
+    border-radius: 5px;
+
+    color: var(--corBaseEscura);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilos para os detalhes e resumo */
+.container-tasks details {
+    display: flex;
+
+    padding: 10px;
+
+    background-color: var(--corTexto);
+    border-radius: 5px;
+}
+
+
+.container-tasks summary {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.container-tasks span {
+    margin: 5px 0px;
+}
+
+.container-weekday button {
+    width: 100%;
+
+    padding: 5px 10px;
+
+    background-color: var(--corBaseEscura);
+    border: 2px solid var(--corBaseClara);
+    border-radius: 5px;
+
+    color: var(--corTexto);
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+#modalCreateTask {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px;
+
+    width: 80%;
+    height: 80%;
+
+    background-color: var(--corTexto);
+    border-radius: 5px;
+
+    box-shadow: 0px 0px 8px black;
+
+    z-index: 2;
+}
+
+#modalCreateTask header {
+    display: flex;
+    justify-content: end;
+
+    width: 100%;
+    height: max-content;
+
+    padding: 5px;
+
+    background-color: var(--corTexto);
+    border-bottom: 1px solid var(--corBaseEscura);
+}
+
+#modalCreateTask header button {
+    display: flex;
+
+    background: none;
+    border: none;
+
+    color: var(--corBaseEscura);
+    cursor: pointer;
+}
+
+#modalCreateTask main {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 5px;
+
+    background-color: var(--corTexto);
+
+    overflow: auto;
+}
+
+#modalCreateTask main input {
+    width: 100%;
+
+    padding: 10px;
+    
+    background-color: var(--corBaseEscura);
+    border: none;
+    border-radius: 5px;
+    outline: none;
+
+    color: var(--corTexto);
+    font-size: 16px;
+}
+
+#modalCreateTask .container-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.btn-add-subtask {
+    display: flex;
+
+    width: max-content;
+
+    background-color: var(--corBaseEscura);
+    border: 1px solid var(--corBaseClara);
+    border-radius: 1px;
+
+    cursor: pointer;
+
+    color: var(--corTexto);
+}
+
+.btn-add-subtask:hover {
+    transform: scale(0.9);
+}
+
+.btn-add-subtask:active {
+    transform: scale(1.0);
+}
+
+#modalCreateTask footer {
+    width: 100%;
+    height: max-content;
+
+    padding: 5px;
+
+    background-color: var(--corTexto);
+    border-top: 1px solid var(--corBaseEscura);
+}
+
+#modalCreateTask footer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    background-color: var(--corBaseEscura);
+    border: none;
+    border-radius: 2px;
+
+    color: var(--corTexto);
+    font-size: 16px;
+    cursor: pointer;
 }

@@ -12,27 +12,128 @@
         />
     </head>
     <body>
-        <main>
+        <main class="container">
             <div class="container-weekday-button">
-                <button>Seg</button>
-                <button>Ter</button>
-                <button>Qua</button>
-                <button>Qui</button>
-                <button>Sex</button>
-                <button>Sab</button>
-                <button>Dom</button>
+                <button class="btn-section">Dom</button>
+                <button class="btn-section">Seg</button>
+                <button class="btn-section">Ter</button>
+                <button class="btn-section">Qua</button>
+                <button class="btn-section">Qui</button>
+                <button class="btn-section">Sex</button>
+                <button class="btn-section">Sab</button>
             </div>
 
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            <section class="container-weekday"></section>
-            
+            <!--Domingo-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Segunda-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Terça-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Quarta-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Quinta-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Sexta-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
+
+            <!--Sábado-->
+            <section class="container-weekday">
+                <button class="btn-create-task">
+                    <span class="material-symbols-outlined"> add </span>
+                    CRIAR NOVA TAREFA
+                </button>
+
+                <hr />
+
+                <div class="container-tasks"></div>
+            </section>
         </main>
 
+        <form id="modalCreateTask">
+            <header>
+                <button type="button" onclick="closeModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </header>
+
+            <main>
+                <div class="container-input" id="containerSubtask">
+                    <input type="text" placeholder="Título da tarefa" id="titleTask"/>
+
+                    <input type="text" placeholder="Subtarefas" class="input-subtask">
+                </div>
+
+                <button type="button" class="btn-add-subtask">
+                    <span class="material-symbols-outlined"> add </span>
+                </button>
+            </main>
+
+            <footer>
+                <button type="button" id="btnAddTask">
+                    <span class="material-symbols-outlined"> add </span>
+                    ADICIONAR TAREFA
+                </button>
+            </footer>
+        </form>
 
         <!--<main>
             <button class="create-task-btn" id="openFormBtn">
@@ -91,6 +192,6 @@
             </div>
         </div>-->
 
-        <script src="script/script.js"></script>
+        <script src="script/replaceSections.js"></script>
     </body>
 </html>
