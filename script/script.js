@@ -1,138 +1,262 @@
-const openFormBtn = document.getElementById("openFormBtn"); // Botão para abrir o formulário
-const closeFormBtn = document.getElementById("closeFormBtn"); //Botão para fechar o formulário
-const form = document.getElementById("form"); // Formulário
+const recoverStorage = localStorage.getItem("tasks");
 
-const title = document.getElementById("input"); // Input que recebe título da tarefa
-const term = document.getElementById("term"); // Input que recebe a data de entrega da tarefa
+let taskRecovered = undefined;
 
-const addTask = document.getElementById("addTaskBtn"); // Botão para adicionar a terefa na tabela
+const day = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+];
 
-const modalDeleteTask = document.getElementById("modalDeleteTask"); // Confirmação para apagar tarefa
-const cancelDelete = document.getElementById("cancelDelete");
+const storage = () => {
+    if (recoverStorage) {
+        taskRecovered = JSON.parse(recoverStorage);
+        console.log("Tasks encontradas!");
+    } else {
+        const tasks = {
+            sunday: [],
+            monday: [],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: [],
+        };
 
-// Adiciona a função de abrir no botão de abrir o formulário
-openFormBtn.addEventListener("click", () => {
-    form.style.display = "flex";
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        taskRecovered = tasks; // Corrigido aqui
+        console.log("Storage criado");
+    }
+};
+
+storage();
+
+// Seleciona todos os botões que trocam as seções (dias da semana)
+const btnSection = document.querySelectorAll(".btn-section");
+
+// Seleciona todas as seções correspondentes aos dias da semana
+const sectionWeek = document.querySelectorAll(".container-weekday");
+
+let setDay = "";
+
+// Função para ativar a seção correspondente ao botão clicado
+const activeSection = (index) => {
+    // Reseta a aparência de todos os botões e esconde todas as seções
+    btnSection.forEach((e) => {
+        e.style.background = "none";
+        e.style.color = "#d4d4d4";
+    });
+
+    sectionWeek.forEach((e) => {
+        e.style.display = "none";
+    });
+
+    // Destaca o botão clicado e mostra a seção correspondente
+    btnSection[index].style.backgroundColor = "#d4d4d4";
+    btnSection[index].style.color = "#212529";
+    sectionWeek[index].style.display = "flex";
+
+    setDay = day[index];
+
+    console.log(setDay);
+};
+
+// Adiciona um evento de clique a cada botão para ativar a seção correspondente
+btnSection.forEach((e, i) => {
+    e.addEventListener("click", () => activeSection(i));
 });
 
-// Função que fecha o formulário
-const closeForm = () => {
-    form.style.display = "none";
-};
+// Quando a página for carregada, ativa a seção correspondente ao dia atual da semana
+document.addEventListener("DOMContentLoaded", () => {
+    const newDay = new Date();
+    const dayWeek = newDay.getDay();
 
-//Botão que fecha o formulário
-closeFormBtn.addEventListener("click", () => {
-    closeForm();
+    // Ativa a seção e destaca o botão correspondente ao dia da semana atual
+    sectionWeek[dayWeek].style.display = "flex";
+    btnSection[dayWeek].style.backgroundColor = "#d4d4d4";
+    btnSection[dayWeek].style.color = "#212529";
+
+    setDay = day[dayWeek];
+
+    console.log(setDay);
 });
 
-// Array que recebe as tarefas
-let saveTasks = [];
+/*--------------------------------------------------------------------------*/
 
-// Captura o título colocado no input dentro do formulário
-const createTitle = () => {
-    return title.value;
+// Obtém o elemento modal pelo ID "modalCreateTask" do HTML
+const modal = document.getElementById("modalCreateTask");
+
+// Função para abrir o modal
+const openModal = () => {
+    modal.style.display = "flex"; // Define o estilo display como "flex" para mostrar o modal
 };
 
-// Captura e formata a data colocado no input dentro do formulário
-const createData = () => {
-    const dateValue = term.value;
-
-    const selectedDate = new Date(dateValue);
-    const day = String(selectedDate.getDate()).padStart(2, "0");
-    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-    const year = selectedDate.getFullYear();
-
-    return `${day}/${month}/${year}`;
+// Função para fechar o modal
+const closeModal = () => {
+    modal.style.display = "none"; // Define o estilo display como "none" para ocultar o modal
 };
 
-addTask.addEventListener("click", () => {
-    const info = {
-        title: createTitle(),
-        data: createData(),
+const btnCreateTask = document.querySelectorAll(".btn-create-task");
+btnCreateTask.forEach((e, i) => {
+    e.addEventListener("click", () => openModal());
+});
+
+/*--------------------------------------------------------------------------*/
+
+const btnSetDay = document.querySelectorAll(".btn-set-day");
+
+btnSetDay.forEach((e, i) => {
+    e.addEventListener("click", () => {});
+});
+
+/*--------------------------------------------------------------------------*/
+
+// Seleciona todos os botões com a classe "btn-add-subtask"
+const btnAddSubtask = document.querySelectorAll(".btn-add-subtask");
+
+// Adiciona um evento de clique a cada botão para criar uma nova subtarefa
+btnAddSubtask.forEach((e) => {
+    e.addEventListener("click", () => createSubTask());
+});
+
+// Função para criar um novo campo de input para subtarefa
+const createSubTask = () => {
+    // Seleciona o contêiner onde os inputs de subtarefa serão adicionados
+    const containerSubtask = document.getElementById("containerSubtask");
+
+    // Cria um novo elemento de input
+    const input = document.createElement("input");
+
+    // Define o tipo e o placeholder do input
+    input.type = "text";
+    input.placeholder = "Subtarefa";
+    input.classList.add("input-subtask");
+
+    // Adiciona o novo input ao contêiner de subtarefas
+    containerSubtask.appendChild(input);
+};
+
+/*--------------------------------------------------------------------------*/
+
+document
+    .getElementById("btnAddTask")
+    .addEventListener("click", () => addTask());
+
+// Função para adicionar uma tarefa ao índice especificado
+const addTask = () => {
+    const task = {
+        title: "",
+        subTask: [],
     };
 
-    let saveTasks = JSON.parse(localStorage.getItem("task")) || [];
-    saveTasks.push(info);
+    // Obtém o valor do título da tarefa a partir do input com o ID "titleTask"
+    const titleTask = document.getElementById("titleTask");
 
-    const taskJSON = JSON.stringify(saveTasks);
-    localStorage.setItem("task", taskJSON);
+    // Define o título da tarefa correspondente ao índice especificado
+    task.title = titleTask.value.trim(); // Remove espaços em branco no início e fim
 
-    title.value = "";
-    term.value = "";
+    // Seleciona todos os inputs de subtarefa com a classe "input-subtask"
+    const subtasks = document.querySelectorAll(".input-subtask");
 
-    createElement(); // Chamar a função para atualizar a tabela após adicionar a nova tarefa
+    // Adiciona os valores das subtarefas ao array 'task' da tarefa correspondente
+    subtasks.forEach((e) => {
+        const subtaskValue = e.value.trim(); // Remove espaços em branco no início e fim
+        if (subtaskValue) {
+            task.subTask.push(subtaskValue);
+        }
+    });
 
-    closeForm();
-});
+    // Verifica se a tarefa tem um título e pelo menos uma subtarefa
+    if (task.title && task.subTask.length > 0) {
+        taskRecovered[setDay].push(task);
+        updateStorage();
+        console.log("Tarefa adicionada com sucesso!");
+    } else {
+        console.log(
+            "Tarefa não adicionada. Verifique se há título e subtarefas."
+        );
+    }
 
-const createElement = () => {
-    const taskJSON = localStorage.getItem("task");
-    const saveTasks = taskJSON ? JSON.parse(taskJSON) : [];
-    const tbody = document.querySelector("tbody");
+    // Limpa os inputs
+    titleTask.value = "";
+    subtasks.forEach((e) => (e.value = ""));
 
-    tbody.innerHTML = ""; // Limpar o conteúdo existente do tbody
+    const containerSubtask = document.getElementById("containerSubtask");
+    containerSubtask.innerHTML = "";
+    createSubTask();
 
-    saveTasks.forEach((info) => {
-        //Adiciona uma nova linha a tabela
-        const tr = document.createElement("tr");
+    reloadTasks();
+    closeModal();
+};
 
-        //Célula com o título da tarefa
-        const tdTitle = document.createElement("td");
-        tdTitle.textContent = info.title;
-        tr.appendChild(tdTitle);
+/*--------------------------------------------------------------------------*/
 
-        //Célula com a data da tarefa
-        const tdData = document.createElement("td");
-        tdData.textContent = info.data;
-        tr.appendChild(tdData);
+const updateStorage = () => {
+    localStorage.setItem("tasks", JSON.stringify(taskRecovered));
+};
 
-        //Célula com botão de deletar
-        const tdButtons = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        const span = document.createElement("span");
-        deleteButton.classList.add("action-btn");
-        span.classList.add("material-symbols-outlined");
-        span.textContent = "delete";
-        deleteButton.appendChild(span);
+/*--------------------------------------------------------------------------*/
 
-        deleteButton.addEventListener("click", () => {
-            modalDeleteTask.style.display = "flex";
+// Seleciona todos os elementos com a classe "container-tasks"
+const container = document.querySelectorAll(".container-tasks");
 
-            const deleteConfirmButton = document.getElementById(
-                "deleteConfirmButton"
-            );
+// Função para mostrar as tarefas
+const showTasks = (index) => {
+    // Limpa o conteúdo do container correspondente
+    container[index].innerHTML = "";
 
-            const buttonDelete = document.createElement("button");
-            buttonDelete.innerText = "Sim, apagar!";
+    // Adiciona as tarefas ao container
+    taskRecovered[day[index]].forEach((element, i) => { // 'i' é o índice da tarefa
+        const details = document.createElement("details");
+        container[index].appendChild(details);
 
-            buttonDelete.addEventListener("click", () => {
-                const index = saveTasks.indexOf(info);
-                if (index > -1) {
-                    saveTasks.splice(index, 1);
-                    localStorage.setItem("task", JSON.stringify(saveTasks));
-                    createElement(); // Atualizar a tabela
+        const summary = document.createElement("summary");
+        summary.textContent = element.title;
+        details.appendChild(summary);
 
-                    modalDeleteTask.style.display = "none";
-                    buttonDelete.remove();
-                }
-            });
-
-            cancelDelete.addEventListener("click", () => {
-                modalDeleteTask.style.display = "none";
-                buttonDelete.remove();
-            });
-
-            deleteConfirmButton.appendChild(buttonDelete);
+        // Cria os spans para cada subtask
+        element.subTask.forEach((e) => {
+            const span = document.createElement("span");
+            span.textContent = e;
+            details.appendChild(span);
         });
 
-        tdButtons.appendChild(deleteButton);
+        // Cria o botão de deletar
+        const button = document.createElement("button");
+        button.textContent = "Deletar tarefa";
+        button.classList.add("btn-delete-task");
 
-        tr.appendChild(tdButtons);
-        tbody.appendChild(tr); // Adicionar a nova linha à tabela
+        // Define o taskIndex correto no clique do botão
+        button.addEventListener("click", () => {
+            taskIndex = i; // Define taskIndex como o índice da tarefa clicada
+            deleteTask();  // Chama a função de deletar
+        });
+
+        // Adiciona o botão ao details
+        details.appendChild(button);
     });
 };
 
-// Chamar createElement ao carregar a página para exibir as tarefas existentes
-window.addEventListener("load", () => {
-    createElement(); // Chamar a função ao carregar a página
-});
+// Função para recarregar todas as tarefas
+const reloadTasks = () => {
+    container.forEach((e, i) => {
+        showTasks(i);
+    });
+};
+
+// Função para deletar uma tarefa
+const deleteTask = () => {
+    taskRecovered[setDay].splice(taskIndex, 1); // Remove a tarefa do array
+
+    updateStorage(); // Atualiza o localStorage
+    reloadTasks(); // Recarrega as tarefas na interface
+
+    console.log("Task apagada!");
+};
+
+// Inicializa a exibição das tarefas 
+reloadTasks();

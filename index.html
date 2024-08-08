@@ -116,10 +116,19 @@
             </header>
 
             <main>
+                <input
+                    type="text"
+                    placeholder="Título da tarefa"
+                    id="titleTask"
+                    autocomplete="off"
+                />
+                
                 <div class="container-input" id="containerSubtask">
-                    <input type="text" placeholder="Título da tarefa" id="titleTask"/>
-
-                    <input type="text" placeholder="Subtarefas" class="input-subtask">
+                    <input
+                        type="text"
+                        placeholder="Subtarefas"
+                        class="input-subtask"
+                    />
                 </div>
 
                 <button type="button" class="btn-add-subtask">
@@ -135,63 +144,6 @@
             </footer>
         </form>
 
-        <!--<main>
-            <button class="create-task-btn" id="openFormBtn">
-                <span class="material-symbols-outlined"> add </span>
-                Criar nova tarefa
-            </button>
-
-            <div class="blur" id="form">
-                <form class="form-task">
-                    <div>
-                        <span
-                            class="material-symbols-outlined"
-                            id="closeFormBtn"
-                            >close</span
-                        >
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Título da tarefa"
-                        autocomplete="off"
-                        id="input"
-                    />
-                    <input type="date" id="term" />
-
-                    <hr />
-
-                    <button id="addTaskBtn">Adicionar nova tarefa</button>
-                </form>
-            </div>
-        </main>
-        <main>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tarefa</th>
-                        <th>Prazo</th>
-                        <th>
-                            <span class="material-symbols-outlined"
-                                >delete</span
-                            >
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody></tbody>
-            </table>
-        </main>
-
-        <div class="blur" id="modalDeleteTask">
-            <div class="confirm-delete">
-                <span>APAGAR TAREFA?</span>
-
-                <div id="deleteConfirmButton">
-                    <button id="cancelDelete">Cancelar</button>
-                </div>
-            </div>
-        </div>-->
-
-        <script src="script/replaceSections.js"></script>
+        <script src="script/script.js"></script>
     </body>
 </html>
